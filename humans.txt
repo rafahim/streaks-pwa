@@ -1,0 +1,16 @@
+/* TEAM */
+Developer: RA Fahim
+Role: Web Developer & Creator
+Experience: Full-stack, 1 year
+Location: Dhaka, Bangladesh
+Website: https://rafahim.com
+GitHub: https://github.com/rafahim
+Twitter: https://twitter.com/rafahimn
+LinkedIn: https://linkedin.com/in/rafahimn
+Contact: dev@rafahim.com
+
+/* SITE */
+Site Name: Streaks
+Type: Privacy-first offline habit tracker PWA
+Stack: HTML5, CSS3, Vanilla JavaScript, IndexedDB, Service Worker
+Data Policy: Local-first by default

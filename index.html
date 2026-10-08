@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101114">
+  <meta name="description" content="Streaks — Free Offline Habit Tracker (Privacy-First PWA) by RA Fahim.">
+  <meta name="keywords" content="habit tracker, streak tracker, offline habit app, privacy habit tracker, pwa habit tracker">
+  <meta name="author" content="RA Fahim">
+  <link rel="canonical" href="https://rafahim.com/streaks/">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Streaks — Free Offline Habit Tracker (Privacy-First PWA) | RA Fahim">
+  <meta property="og:description" content="Private, offline-first habit tracking with streaks, heatmaps, stats and local-only data.">
+  <meta property="og:url" content="https://rafahim.com/streaks/">
+  <meta property="og:image" content="https://rafahim.com/streaks/og-image.svg">
+  <meta property="og:site_name" content="Streaks">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Streaks — Free Offline Habit Tracker | RA Fahim">
+  <meta name="twitter:description" content="Privacy-first offline habit tracking PWA.">
+  <meta name="twitter:image" content="https://rafahim.com/streaks/og-image.svg">
+  <title>Streaks — Free Offline Habit Tracker (Privacy-First PWA) | RA Fahim</title>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebApplication",
+        "name":"Streaks",
+        "url":"https://rafahim.com/streaks/",
+        "applicationCategory":"HealthApplication",
+        "operatingSystem":"Web",
+        "browserRequirements":"Requires JavaScript and IndexedDB support",
+        "description":"Privacy-first offline habit tracker PWA with streaks, heatmaps, stats, export and optional encrypted WebDAV backup.",
+        "author":{"@type":"Person","name":"RA Fahim","url":"https://rafahim.com"}
+      },
+      {
+        "@type":"Person",
+        "name":"RA Fahim",
+        "url":"https://rafahim.com",
+        "sameAs":[
+          "https://github.com/rafahim",
+          "https://twitter.com/rafahimn",
+          "https://linkedin.com/in/rafahimn"
+        ],
+        "jobTitle":"Web Developer & Creator",
+        "address":{"@type":"PostalAddress","addressLocality":"Dhaka","addressCountry":"BD"}
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <button id="brandButton" class="brand-mark" aria-label="Go to dashboard">S</button>
+        <div>
+          <strong>Streaks</strong>
+          <span id="brandSub">Offline-first habit tracker</span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button id="langToggle" class="icon-button" title="Language">বাংলা</button>
+        <button id="themeToggle" class="icon-button" title="Theme">☼</button>
+        <button id="installButton" class="icon-button" hidden title="Install">⇩</button>
+        <button id="moreButton" class="icon-button" title="More">⋯</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <section id="dashboardView" class="view active">
+        <div class="hero-row">
+          <div>
+            <p class="eyebrow" id="todayLabel">Today</p>
+            <h1 id="greeting">Build your streak.</h1>
+            <p id="todaySummary" class="muted">Keep your chain alive.</p>
+          </div>
+          <button id="addHabitButton" class="primary-button">+ Add habit</button>
+        </div>
+
+        <div id="statsStrip" class="stats-strip"></div>
+        <div id="habitList" class="habit-list"></div>
+
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Progress</p>
+            <h2 id="progressTitle">This year</h2>
+          </div>
+          <div class="section-actions">
+            <button class="ghost-button view-tab" data-view="calendarView">Calendar</button>
+            <button class="ghost-button view-tab" data-view="statsView">Stats</button>
+          </div>
+        </div>
+
+        <div id="heatmapCard" class="card heatmap-card"></div>
+        <div class="chart-grid">
+          <div id="weeklyChart" class="card chart-card"></div>
+          <div id="monthlyChart" class="card chart-card"></div>
+        </div>
+      </section>
+
+      <section id="calendarView" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Review</p>
+            <h1 id="calendarTitle">Calendar</h1>
+          </div>
+          <button class="ghost-button" data-home>Back</button>
+        </div>
+        <div class="card calendar-toolbar">
+          <button id="prevMonth" class="icon-button">‹</button>
+          <strong id="monthLabel"></strong>
+          <button id="nextMonth" class="icon-button">›</button>
+        </div>
+        <div id="calendarCard" class="card calendar-card"></div>
+      </section>
+
+      <section id="statsView" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Insights</p>
+            <h1 id="statsTitle">Stats</h1>
+          </div>
+          <button class="ghost-button" data-home>Back</button>
+        </div>
+        <div id="statsCards" class="stats-grid"></div>
+        <div id="yearReview" class="card review-card"></div>
+      </section>
+
+      <section id="settingsView" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Control</p>
+            <h1 id="settingsTitle">Settings</h1>
+          </div>
+          <button class="ghost-button" data-home>Back</button>
+        </div>
+
+        <div class="settings-grid">
+          <div class="card settings-card">
+            <h2>Notifications</h2>
+            <label class="toggle-row"><span>Browser notifications</span><input id="notifyEnabled" type="checkbox"><span class="switch"></span></label>
+            <label>Reminder time<input id="notifyTime" type="time" value="21:00"></label>
+            <label class="toggle-row"><span>Chain-break warnings</span><input id="chainWarning" type="checkbox"><span class="switch"></span></label>
+            <button id="saveNotify" class="primary-button">Save notifications</button>
+            <p id="notifyStatus" class="muted small"></p>
+          </div>
+
+          <div class="card settings-card">
+            <h2>Data</h2>
+            <div class="button-row">
+              <button id="exportJson" class="secondary-button">Export JSON</button>
+              <button id="exportCsv" class="secondary-button">Export CSV</button>
+            </div>
+            <label class="upload-label">Import JSON<input id="importJson" type="file" accept="application/json"></label>
+            <button id="demoButton" class="secondary-button">Load demo data</button>
+            <button id="clearData" class="danger-button">Delete all local data</button>
+            <p class="muted small">Everything stays on this device unless you explicitly use WebDAV backup.</p>
+          </div>
+
+          <div class="card settings-card">
+            <h2>Encrypted WebDAV</h2>
+            <label>WebDAV URL<input id="webdavUrl" type="url" placeholder="https://example.com/remote.php/dav/files/user/streaks.bin"></label>
+            <label>Username<input id="webdavUser" type="text"></label>
+            <label>Password<input id="webdavPass" type="password"></label>
+            <label>Backup password<input id="backupPass" type="password"></label>
+            <div class="button-row">
+              <button id="webdavUpload" class="secondary-button">Encrypted upload</button>
+              <button id="webdavDownload" class="secondary-button">Encrypted restore</button>
+            </div>
+            <p id="webdavStatus" class="muted small"></p>
+          </div>
+
+          <div class="card settings-card">
+            <h2>Demo</h2>
+            <p class="muted">Demo data creates realistic habits, streaks, notes and quantities. Your existing local data remains unless you clear it.</p>
+            <button id="demoModeButton" class="primary-button">Open demo mode</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="aboutView" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">About</p>
+            <h1>Streaks</h1>
+          </div>
+          <button class="ghost-button" data-home>Back</button>
+        </div>
+        <div class="card prose-card">
+          <p>Streaks is a privacy-first, offline habit tracker. Habit names, completions, notes and statistics are stored in IndexedDB on your device.</p>
+          <p>No analytics, account or cloud sync is required. Optional encrypted WebDAV backup is user-initiated.</p>
+          <p>Built with HTML5, CSS3, Vanilla JavaScript, IndexedDB and a Service Worker.</p>
+          <p>Created by RA Fahim, Web Developer & Creator, Dhaka Bangladesh.</p>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Primary">
+      <button class="nav-button active" data-view="dashboardView"><span>⌂</span><small>Home</small></button>
+      <button class="nav-button" data-view="calendarView"><span>◫</span><small>Calendar</small></button>
+      <button class="nav-button" data-view="statsView"><span>◌</span><small>Stats</small></button>
+      <button class="nav-button" data-view="settingsView"><span>⚙</span><small>Settings</small></button>
+      <button class="nav-button" data-view="aboutView"><span>i</span><small>About</small></button>
+    </nav>
+
+    <footer class="footer">Built with ❤️ by RA Fahim · <a href="https://rafahim.com" rel="noopener">rafahim.com</a> · © 2026 RA Fahim</footer>
+  </div>
+
+  <div id="modalRoot" class="modal-root" hidden></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./script.js"></script>
+</body>
+</html>

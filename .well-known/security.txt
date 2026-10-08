@@ -1,0 +1,5 @@
+Contact: mailto:dev@rafahim.com
+Canonical: https://rafahim.com/streaks/.well-known/security.txt
+Policy: https://rafahim.com/streaks/
+Preferred-Languages: en, bn
+Expires: 2027-10-09T00:00:00Z

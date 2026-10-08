@@ -1,0 +1,29 @@
+{
+  "name": "Streaks — Offline Habit Tracker",
+  "short_name": "Streaks",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#101114",
+  "theme_color": "#101114",
+  "description": "Privacy-first offline habit tracker PWA by RA Fahim.",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["health", "productivity", "lifestyle"],
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add habit",
+      "short_name": "Add",
+      "url": "./#add",
+      "icons": [{"src":"./favicon.svg","sizes":"any","type":"image/svg+xml"}]
+    }
+  ]
+}
